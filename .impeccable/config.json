@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "layout-transition",
+        "value": "*",
+        "files": [
+          "**/elite.css"
+        ],
+        "createdAt": "2026-09-15T07:23:53.586Z",
+        "reason": "Sanctioned: .tm__dot::after (pagination indicator) morphs an 8px circle to a 22px rounded pill on width; it is position:absolute (out of flow, reflows nothing) and transform:scaleX would distort a circle into an ellipse, not the intended border-radius pill. Width is correct here."
+      }
+    ]
+  }
+}

@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   Elite Listings: the Ink & Paper system (picked 2026-09-12).
+   Every colour is OKLCH; components never carry raw hex. Two grounds
+   (paper, dark film) set the same semantic slots so components are
+   surface-agnostic. Contrast pairs verified by script: every text pair
+   used is AA or better.
+   ------------------------------------------------------------------ */
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-fg-2: var(--fg-2);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-line: var(--line);
+  --color-warn: var(--warn);
+  --color-paper: var(--ip-paper);
+  --color-paper-2: var(--ip-paper-2);
+  --color-ink: var(--ip-ink);
+  --color-dark: var(--ip-dark);
+  --color-bordeaux: var(--ip-bordeaux);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-schibsted);
+  --ease-out-3: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --ip-paper: oklch(96.5% 0.009 80);
+  --ip-paper-2: oklch(92.5% 0.013 78);
+  --ip-ink: oklch(21% 0.014 55);
+  --ip-ink-2: oklch(44% 0.016 55);
+  --ip-dark: oklch(17% 0.02 38);
+  --ip-dark-2: oklch(24% 0.022 38);
+  --ip-on-dark: oklch(95% 0.01 80);
+  --ip-on-dark-2: oklch(76% 0.02 70);
+  --ip-bordeaux: oklch(38% 0.15 20);
+  --ip-bordeaux-lift: oklch(66% 0.17 20);
+
+  /* Paper is the default ground. */
+  --bg: var(--ip-paper);
+  --fg: var(--ip-ink);
+  --fg-2: var(--ip-ink-2);
+  --accent: var(--ip-bordeaux);
+  --on-accent: var(--ip-paper);
+  --line: color-mix(in oklch, var(--ip-ink) 16%, transparent);
+  --warn: var(--ip-bordeaux);
+}
+
+/* Grounds */
+.z-dark {
+  --bg: var(--ip-dark);
+  --fg: var(--ip-on-dark);
+  --fg-2: var(--ip-on-dark-2);
+  --accent: var(--ip-bordeaux);
+  --on-accent: var(--ip-on-dark);
+  --line: color-mix(in oklch, var(--ip-on-dark) 18%, transparent);
+  --warn: var(--ip-bordeaux-lift);
+  background: var(--bg);
+  color: var(--fg);
+  color-scheme: dark;
+}
+/* The hero's ground on every width: the dark room. */
+.z-hero {
+  --bg: var(--ip-dark);
+  --fg: var(--ip-on-dark);
+  --fg-2: var(--ip-on-dark-2);
+  --accent: var(--ip-bordeaux);
+  --on-accent: var(--ip-on-dark);
+  --line: color-mix(in oklch, var(--ip-on-dark) 18%, transparent);
+  --warn: var(--ip-bordeaux-lift);
+  background: var(--bg);
+  color: var(--fg);
+  color-scheme: dark;
+}
+.z-hero .ip-rule {
+  background: var(--ip-bordeaux-lift);
+}
+.z-hero .ip-label-accent {
+  color: var(--ip-bordeaux-lift);
+}
+.z-hero .ip-portrait img {
+  filter: saturate(0.7) contrast(1.05) brightness(0.9);
+}
+/* Bilal in the hero: centred half figure on phones, larger than the zone under the copy and cropped by the
+   panel's bottom edge; bottom-right in the room on desktop. */
+.hero-portrait {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: max(calc(100dvh - 28.75rem), 18.5rem);
+  max-height: 34rem;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+.hero-portrait img {
+  height: 134%;
+  width: auto;
+  max-width: none;
+}
+@media (min-width: 768px) {
+  .hero-portrait {
+    left: auto;
+    right: 2.5rem;
+    bottom: -3.5rem;
+    width: auto;
+    height: 84vh;
+    max-height: none;
+    overflow: visible;
+    display: block;
+  }
+  .hero-portrait img {
+    height: 100%;
+  }
+}
+.z-paper {
+  --bg: var(--ip-paper);
+  background: var(--bg);
+  color: var(--fg);
+  color-scheme: light;
+}
+.z-paper-2 {
+  --bg: var(--ip-paper-2);
+  background: var(--bg);
+  color: var(--fg);
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  background: var(--ip-paper);
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-schibsted), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+/* Type: Fraunces carries the voice, three roles; Schibsted Grotesk for body and UI. */
+.ip-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 340;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 1;
+  letter-spacing: -0.022em;
+  line-height: 0.98;
+  font-feature-settings: "kern" 1, "liga" 1, "ss01" 1;
+}
+.ip-title {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 400;
+  font-variation-settings: "opsz" 72, "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.012em;
+  line-height: 1.04;
+}
+.ip-brand {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 500;
+  font-variation-settings: "opsz" 36, "SOFT" 30, "WONK" 0;
+  letter-spacing: -0.01em;
+}
+.ip-label {
+  font-size: 0.8125rem;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  font-weight: 500;
+}
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* The bordeaux thread: one rule, one label, wherever a section starts. */
+.ip-rule {
+  display: inline-block;
+  width: 2.25rem;
+  height: 2px;
+  background: var(--accent);
+  vertical-align: middle;
+  flex: none;
+}
+.z-dark .ip-rule {
+  background: var(--ip-bordeaux-lift);
+}
+.ip-label-accent {
+  color: var(--accent);
+}
+.z-dark .ip-label-accent {
+  color: var(--ip-bordeaux-lift);
+}
+
+/* Visible focus everywhere, never removed. */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* One photographic grade for the whole page: real colour, a touch desaturated, warm shadows.
+   Film moments (dark zones) go deeper and lose more saturation so the light in the frame carries them. */
+.ip-photo img {
+  filter: saturate(0.72) contrast(1.04) sepia(0.1) brightness(0.98);
+}
+.ip-film img {
+  filter: saturate(0.55) contrast(1.08) brightness(0.86);
+}
+.ip-film::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in oklch, var(--ip-dark) 88%, transparent) 0%, color-mix(in oklch, var(--ip-dark) 45%, transparent) 42%, transparent 70%),
+    linear-gradient(0deg, color-mix(in oklch, var(--ip-dark) 92%, transparent) 0%, transparent 45%),
+    linear-gradient(180deg, color-mix(in oklch, var(--ip-dark) 55%, transparent) 0%, transparent 28%);
+}
+/* Phones: the copy sits on the brightest part of the room, so the film goes a step darker there. */
+@media (max-width: 767px) {
+  .ip-film::after {
+    background:
+      linear-gradient(0deg, color-mix(in oklch, var(--ip-dark) 96%, transparent) 0%, color-mix(in oklch, var(--ip-dark) 70%, transparent) 50%, color-mix(in oklch, var(--ip-dark) 52%, transparent) 100%);
+  }
+}
+.ip-portrait img {
+  filter: saturate(0.85) contrast(1.03) brightness(0.96);
+}
+.z-dark .ip-portrait img {
+  filter: saturate(0.7) contrast(1.05) brightness(0.9);
+}
+
+/* Load-time reveals run as CSS from the server HTML (no JS wait). */
+@keyframes rise {
+  from {
+    transform: translateY(110%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+.rise {
+  animation: rise 0.9s var(--ease-out-3) backwards;
+}
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.settle {
+  opacity: 0;
+  animation: settle 0.7s var(--ease-out-3) both;
+}
+@keyframes photo-in {
+  from {
+    transform: scale(1.08);
+    opacity: 0.001;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.photo-in {
+  animation: photo-in 1.8s var(--ease-out-3) backwards;
+  transform-origin: 50% 60%;
+}
+/* Bilal arrives last, on a fade and a rise. (The fade also keeps the portrait out of LCP, so the page's LCP
+   stays the hero paragraph, painted with the first frame.) */
+@keyframes portrait-in {
+  from {
+    transform: translateY(28px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+.portrait-in {
+  animation: portrait-in 1.2s var(--ease-out-3) both;
+}
+
+/* Horizontal rows: scroll-snap, no visible bar, still keyboard and wheel scrollable. */
+.row-scroll {
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 1.25rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.row-scroll::-webkit-scrollbar {
+  display: none;
+}
+.row-scroll > * {
+  scroll-snap-align: start;
+}
+
+/* Pinned: reduced motion turns every animation off. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .rise,
+  .settle,
+  .photo-in,
+  .portrait-in {
+    animation: none !important;
+    transform: none;
+    opacity: 1;
+  }
+}
+
+/* Lenis */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
